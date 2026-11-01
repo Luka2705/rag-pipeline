@@ -1,0 +1,38 @@
+
+services:
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - "127.0.0.1:11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    restart: unless-stopped
+
+  qdrant:
+    image: qdrant/qdrant:latest
+    ports:
+      - "127.0.0.1:6333:6333"
+    volumes:
+      - qdrant_data:/qdrant/storage
+    restart: unless-stopped
+
+  api:
+    build: ./app
+    ports:
+      - "127.0.0.1:8000:8000"
+    environment:
+      OLLAMA_URL: http://ollama:11434
+      QDRANT_URL: http://qdrant:6333
+      EMBED_MODEL: qwen3-embedding:0.6b
+      LLM_MODEL: qwen3:4b
+      COLLECTION: bible_luther_1912
+    volumes:
+      - ./data:/app/data:ro
+    depends_on:
+      - ollama
+      - qdrant
+    restart: unless-stopped
+
+volumes:
+  ollama_data:
+  qdrant_data:
