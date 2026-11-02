@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="Fragen an die Bibel. Lokale Antworten mit Quellen aus der Lutherbibel von 1912.">
+  <title>Bibelraum</title>
+  <script>try{const t=localStorage.getItem('bibelraum.appearance');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t;}catch(e){}</script>
+  <link rel="stylesheet" href="/static/style.css?v=2">
+  <script src="/static/app.js?v=2" defer></script>
+</head>
+<body>
+  <svg class="symbol-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+    <symbol id="book" viewBox="0 0 24 24"><path d="M12 5.5C9 3.5 5.5 3.5 2.5 4.5v15c3-1 6.5-1 9.5 1 3-2 6.5-2 9.5-1v-15c-3-1-6.5-1-9.5 1Zm0 0v15"/></symbol>
+    <symbol id="compose" viewBox="0 0 24 24"><path d="M12 4H5a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h13a2 2 0 0 0 2-2v-7M10 14l1-4L19 2l3 3-8 8-4 1ZM17 4l3 3"/></symbol>
+    <symbol id="sidebar-icon" viewBox="0 0 24 24"><rect x="2.5" y="4" width="19" height="16" rx="3"/><path d="M9 4v16M5.5 8h.1M5.5 12h.1"/></symbol>
+    <symbol id="close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+    <symbol id="arrow" viewBox="0 0 24 24"><path d="M12 19V5m-6 6 6-6 6 6"/></symbol>
+    <symbol id="lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="11" rx="3"/><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3"/></symbol>
+    <symbol id="compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m16 8-2.5 5.5L8 16l2.5-5.5L16 8Z"/></symbol>
+    <symbol id="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M19 5l-1.5 1.5m-11 11L5 19"/></symbol>
+    <symbol id="heart" viewBox="0 0 24 24"><path d="M12 21 3.7 12.7a5.5 5.5 0 0 1 7.8-7.8l.5.5.5-.5a5.5 5.5 0 0 1 7.8 7.8L12 21Z"/></symbol>
+    <symbol id="chevron" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+  </defs></svg>
+  <a class="skip-link" href="#question">Zur Frage springen</a>
+  <button id="sidebar-backdrop" class="sidebar-backdrop" aria-label="Seitenleiste schließen" tabindex="-1" hidden></button>
+  <aside class="sidebar" id="sidebar" aria-label="Navigation">
+    <div class="sidebar-brand"><a class="brand" href="/" aria-label="Bibelraum Startseite"><span class="brand-icon"><svg><use href="#book"/></svg></span>Bibelraum</a><button id="close-sidebar" class="icon-button" aria-label="Seitenleiste schließen"><svg><use href="#close"/></svg></button></div>
+    <button class="new-button" id="new-question"><svg><use href="#compose"/></svg>Neue Frage</button>
+    <div class="history-heading"><span>Zuletzt gefragt</span><button id="clear-history" title="Verlauf löschen" aria-label="Verlauf löschen">Löschen</button></div>
+    <nav id="history" aria-label="Bisherige Fragen"></nav>
+    <div class="library-info"><svg><use href="#book"/></svg><div>Lutherbibel 1912<small>Deine Textgrundlage</small></div></div>
+    <div class="sidebar-footer"><svg><use href="#lock"/></svg><span>Verlauf nur in diesem Browser</span></div>
+  </aside>
+  <div class="workspace" id="workspace">
+    <header class="topbar">
+      <div class="toolbar-leading"><button id="toggle-sidebar" class="icon-button" aria-label="Seitenleiste umschalten" aria-controls="sidebar" aria-expanded="true" title="Seitenleiste"><svg><use href="#sidebar-icon"/></svg></button><div class="toolbar-title">Bibelraum<small>Lutherbibel 1912</small></div></div>
+      <div class="toolbar-actions"><button class="connection" id="connection" title="Verbindung erneut prüfen"><span class="status-dot"></span><span id="connection-text">Verbinden …</span></button><label class="appearance-control"><span class="sr-only">Darstellung</span><svg aria-hidden="true"><use href="#sun"/></svg><select id="appearance" aria-label="Darstellung"><option value="system">System</option><option value="light">Hell</option><option value="dark">Dunkel</option></select></label></div>
+    </header>
+    <main id="main">
+      <section class="intro" id="intro"><div class="welcome-icon" aria-hidden="true"><svg><use href="#book"/></svg></div><h1>Raum für deine Fragen.</h1><p>Entdecke die Bibel mit verständlichen Antworten<br class="desktop-break"> und den passenden Stellen zum Nachlesen.</p></section>
+      <div class="error" id="error" role="alert" hidden></div>
+      <section class="result-section" id="result-section" hidden aria-label="Antwort und Bibelstellen">
+        <div class="result-heading"><span>Deine Frage</span><span id="result-state" role="status"></span></div>
+        <h2 id="asked-question"></h2>
+        <div class="result-grid">
+          <article class="answer-card"><div class="card-label"><svg aria-hidden="true"><use href="#book"/></svg><h3>Antwort</h3><button id="copy" title="Antwort kopieren" aria-label="Antwort kopieren" disabled>Kopieren</button></div><div id="answer" class="answer"></div><div id="loading" class="loading" role="status"><span class="spinner" aria-hidden="true"></span><span id="progress">Bibelstellen werden gesucht …</span></div><p id="truncated" class="notice" hidden>Die Antwort hat die Längengrenze erreicht. Eine gezieltere Frage kann helfen.</p><div class="answer-footer"><span>KI-generiert. Prüfe die Antwort anhand der Quellen.</span><span id="timing"></span></div></article>
+          <aside class="sources-panel" aria-label="Gefundene Bibelstellen"><div class="sources-heading"><h3>Bibelstellen</h3><span id="source-count">0</span></div><p class="sources-hint">Originaltexte · Lutherbibel 1912</p><div id="sources"></div></aside>
+        </div>
+      </section>
+      <section class="composer-section" aria-label="Eine Frage stellen">
+        <form id="question-form"><label class="sr-only" for="question">Deine Frage an die Bibel</label><textarea id="question" name="question" rows="2" maxlength="2000" required placeholder="Stelle eine Frage zur Bibel …"></textarea><div class="composer-bottom"><div class="source-setting"><label for="top-k">Bibelstellen</label><select id="top-k" aria-label="Anzahl der Bibelstellen"><option value="3">3</option><option value="5" selected>5</option><option value="8">8</option></select></div><div class="send-controls"><span class="shortcut" aria-hidden="true">⌘ ↵</span><button type="submit" id="submit">Frage stellen<svg aria-hidden="true"><use href="#arrow"/></svg></button><button type="button" id="stop" hidden>Stoppen<span class="stop-icon" aria-hidden="true"></span></button></div></div></form>
+      </section>
+      <section id="suggestions" class="suggestions" aria-label="Fragen zum Einstieg"><h2>Ein guter Anfang</h2><div class="suggestion-grid"><button data-question="Was sagt die Bibel über den Sinn des Lebens?"><svg class="topic-icon blue"><use href="#compass"/></svg><strong>Sinn des Lebens</strong><span>Was gibt dem Leben Bedeutung?</span><svg class="suggestion-chevron"><use href="#chevron"/></svg></button><button data-question="Wie kann ich mit Sorgen umgehen?"><svg class="topic-icon orange"><use href="#sun"/></svg><strong>Hoffnung finden</strong><span>Wie gehe ich mit Sorgen um?</span><svg class="suggestion-chevron"><use href="#chevron"/></svg></button><button data-question="Was bedeutet Nächstenliebe?"><svg class="topic-icon pink"><use href="#heart"/></svg><strong>Nächstenliebe</strong><span>Was bedeutet sie im Alltag?</span><svg class="suggestion-chevron"><use href="#chevron"/></svg></button></div></section>
+      <footer class="main-footer"><svg aria-hidden="true"><use href="#lock"/></svg><span>Deine Fragen bleiben auf deinem Gerät.</span></footer>
+    </main>
+  </div>
+  <dialog id="clear-dialog" aria-labelledby="clear-title" aria-describedby="clear-description"><div class="dialog-icon"><svg aria-hidden="true"><use href="#book"/></svg></div><h2 id="clear-title">Verlauf löschen?</h2><p id="clear-description">Alle gespeicherten Fragen und Antworten werden aus diesem Browser entfernt.</p><form method="dialog" class="dialog-actions"><button value="cancel" autofocus>Abbrechen</button><button value="delete" class="destructive">Verlauf löschen</button></form></dialog>
+</body>
+</html>
